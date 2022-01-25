@@ -1,0 +1,61 @@
+<div class="container">
+    <h5 class="text-center mt-3">Excel Data</h5>
+    <div class="d-flex justify-content-between">
+        <a href="#" routerLink="/table" class="btn btn-outline-success ms-auto" (click)="triggerModal(modalData)" >Create New Data</a>
+        <a href="#"  class="btn btn-outline-success ms-auto" (click)="exportDataToExcel()">Export to xlsx</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered p-0 m-0" id="excel-table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Published</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr scope="row" *ngFor="let excelData of excelDatas">
+                    <td>{{ excelData.id }}</td>
+                    <td>{{ excelData.title }}</td>
+                    <td>{{ excelData.description}}</td>
+                    <td>{{ excelData.published }}</td>
+                    <td>
+                        <a href="#" routerLink="/details/{{ excelData.id }}" class="btn btn-primary m-1">Edit</a>
+                        <button type="button" (click)="deleteData(excelData.id)" class="btn btn-danger m-1">Delete</button>
+                    </td>
+                </tr>
+                <tr scope="row" *ngIf="excelDatas.length === 0">
+                    <td colspan="6" class="text-center">No record found</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<ng-template #modalData let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Angular Bootstrap Modal Popup</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <form>
+        <div class="md-form mb-5">
+          <label for="exampleInputEmail1"> Data Title</label>
+          <input type="text" class="form-control" id="exampleInputTitle" aria-describedby="emailHelp" placeholder="Enter Title" [(ngModel)]="currentData.title" name = "title">
+        </div>
+        <div class="md-form mb-5">
+          <label for="exampleInputPassword1">Description</label>
+          <input type="text" class="form-control" id="exampleInputDescription" placeholder="Password" [(ngModel)]="currentData.description" name="description">
+        </div>
+        <div class="modal-footer d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary" (click)="saveData();modal.close('Save click')">Save</button>
+            <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Close</button>
+        </div>
+    </form>
+  </ng-template>
+
+
+
